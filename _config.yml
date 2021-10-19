@@ -5,10 +5,10 @@
 # Site
 title: LLJ's Blog
 subtitle: 'StJimReal的个人博客'
-description: ''
+description: '记录程序员小刘技术成长的点点滴滴'
 keywords:
 author: Jim Real
-language: zh
+language: zh-CN
 timezone: 'PRC'
 
 # URL
@@ -98,8 +98,12 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: cactus
-# theme_config: 
-#     colorscheme: dark
+theme_config: 
+    colorscheme: dark
+    social_links:
+      github: https://github.com/stjimreal/
+      weibo: https://weibo.com/u/2917416775
+      mail: mailto:stjimreal@gmail.com
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
