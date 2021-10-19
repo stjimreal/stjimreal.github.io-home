@@ -97,7 +97,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hacker
+theme: landscape
 # theme_config: 
 #     colorscheme: dark
 
