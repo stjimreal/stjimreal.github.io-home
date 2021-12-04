@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Java ConcurrentHashMap注释中文翻译(作者：Doug Lea) Doug Lea 主页传送门：http:&#x2F;&#x2F;gee.cs.oswego.edu&#x2F;  生词   词条 释义    retrieval 索引   interoperable 互操作   functional specification 功能规范   transient state 瞬态   sth. modulo nu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ConcurrentHashMap_comment_v1.8_zh">
+<meta property="og:url" content="https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/index.html">
+<meta property="og:site_name" content="LLJ&#39;s Blog">
+<meta property="og:description" content="Java ConcurrentHashMap注释中文翻译(作者：Doug Lea) Doug Lea 主页传送门：http:&#x2F;&#x2F;gee.cs.oswego.edu&#x2F;  生词   词条 释义    retrieval 索引   interoperable 互操作   functional specification 功能规范   transient state 瞬态   sth. modulo nu">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-04T12:41:27.000Z">
+<meta property="article:modified_time" content="2021-12-04T14:45:27.506Z">
+<meta property="article:author" content="Jim Real">
+<meta property="article:tag" content="data structure &amp; algorithms">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="infrastructure">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>ConcurrentHashMap_comment_v1.8_zh</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2021/10/28/Redis%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&text=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&title=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&is_video=false&description=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ConcurrentHashMap_comment_v1.8_zh&body=Check out this article: https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&title=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&title=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&title=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&title=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&name=ConcurrentHashMap_comment_v1.8_zh&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&t=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-ConcurrentHashMap%E6%B3%A8%E9%87%8A%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-%E4%BD%9C%E8%80%85%EF%BC%9ADoug-Lea"><span class="toc-number">1.</span> <span class="toc-text">Java ConcurrentHashMap注释中文翻译(作者：Doug Lea)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E8%AF%8D"><span class="toc-number">1.1.</span> <span class="toc-text">生词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E6%B3%A8%E9%87%8A"><span class="toc-number">1.2.</span> <span class="toc-text">功能注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%B3%A8%E9%87%8A"><span class="toc-number">1.3.</span> <span class="toc-text">实现注释</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        ConcurrentHashMap_comment_v1.8_zh
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jim Real</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-12-04T12:41:27.000Z" itemprop="datePublished">2021-12-04</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/data-structure-algorithms/" rel="tag">data structure & algorithms</a>, <a class="tag-link-link" href="/tags/infrastructure/" rel="tag">infrastructure</a>, <a class="tag-link-link" href="/tags/java/" rel="tag">java</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Java-ConcurrentHashMap注释中文翻译-作者：Doug-Lea"><a href="#Java-ConcurrentHashMap注释中文翻译-作者：Doug-Lea" class="headerlink" title="Java ConcurrentHashMap注释中文翻译(作者：Doug Lea)"></a>Java ConcurrentHashMap注释中文翻译(作者：Doug Lea)</h1><blockquote>
+<p>Doug Lea 主页传送门：<a target="_blank" rel="noopener" href="http://gee.cs.oswego.edu/">http://gee.cs.oswego.edu/</a></p>
+</blockquote>
+<h2 id="生词"><a href="#生词" class="headerlink" title="生词"></a>生词</h2><table>
+<thead>
+<tr>
+<th>词条</th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>retrieval</td>
+<td>索引</td>
+</tr>
+<tr>
+<td>interoperable</td>
+<td>互操作</td>
+</tr>
+<tr>
+<td>functional specification</td>
+<td>功能规范</td>
+</tr>
+<tr>
+<td>transient state</td>
+<td>瞬态</td>
+</tr>
+<tr>
+<td>sth. modulo numb.</td>
+<td>以 … 为模</td>
+</tr>
+<tr>
+<td>bulk operations</td>
+<td>批量操作</td>
+</tr>
+<tr>
+<td>scalar</td>
+<td>标量</td>
+</tr>
+<tr>
+<td>contention</td>
+<td>争用</td>
+</tr>
+</tbody></table>
+<h2 id="功能注释"><a href="#功能注释" class="headerlink" title="功能注释"></a>功能注释</h2><p>A hash table supporting full concurrency of retrievals and high expected concurrency for updates. This class obeys the same functional specification as Hashtable, and includes versions of methods corresponding to each method of Hashtable. However, even though all operations are thread-safe, retrieval operations do not entail locking, and there is not any support for locking the entire table in a way that prevents all access. This class is fully interoperable with Hashtable in programs that rely on its thread safety but not on its synchronization details.<br>ConcurrentHashMap是一个哈希表，能够支持检索的完全并发性和更新的高预期并发性。该类遵循与Hashtable相同的<strong>功能规范</strong>，包括与Hashtable的每个方法对应的方法版本。但是，即使所有操作都是线程安全的，检索操作也不需要锁定，并且不支持以防止所有访问的方式<strong>锁定整个表</strong>。在依赖其线程安全但不依赖于其同步细节的程序中，此类与 Hashtable 完全<strong>可互操作</strong>。<br>Retrieval operations (including get) generally do not block, so may overlap with update operations (including put and remove). Retrievals reflect the results of the most recently completed update operations holding upon their onset. (More formally, an update operation for a given key bears a happens-before relation with any (non-null) retrieval for that key reporting the updated value.) For aggregate operations such as putAll and clear, concurrent retrievals may reflect insertion or removal of only some entries. Similarly, Iterators, Spliterators and Enumerations return elements reflecting the state of the hash table at some point at or since the creation of the iterator/enumeration. They do not throw ConcurrentModificationException. However, iterators are designed to be used by only one thread at a time. Bear in mind that the results of aggregate status methods including size, isEmpty, and containsValue are typically useful only when a map is not undergoing concurrent updates in other threads. Otherwise the results of these methods reflect transient states that may be adequate for monitoring or estimation purposes, but not for program control.<br>检索操作（包括获取）一般不会阻塞，因此可能与更新操作（包括插入和删除）重叠。检索反映了最近完成的更新操作的结果。 （更正式地说，给定键的更新操作与报告更新值的该键的任何（非空）检索具有<strong>happens-before</strong>关系，注：满足JMM约束？。）对于诸如 putAll 和 clear 之类的聚合操作，并发检索可能只反映一些条目的插入或删除。类似地，迭代器、拆分器和枚举返回反映哈希表在迭代器/枚举<strong>创建时</strong>或<strong>创建后的</strong>某个时刻的状态的元素。它们不会抛出 ConcurrentModificationException。然而，迭代器被设计为<strong>一次只能被一个线程</strong>使用，注：过多地使用迭代器会导致线程频繁阻塞？。请记住，包括 size、isEmpty 和 containsValue 在内的聚合状态方法的结果通常仅在哈希表未在其他线程中进行并发更新时才发挥正常的函数效用。否则，这些方法的结果反映的瞬态状态可能足以用于监测或估计目的，但不适用于程序控制。<br>The table is dynamically expanded when there are too many collisions (i.e., keys that have distinct hash codes but fall into the same slot modulo the table size), with the expected average effect of maintaining roughly two bins per mapping (corresponding to a 0.75 load factor threshold for resizing). There may be much variance around this average as mappings are added and removed, but overall, this maintains a commonly accepted time/space tradeoff for hash tables. However, resizing this or any other kind of hash table may be a relatively slow operation. When possible, it is a good idea to provide a size estimate as an optional initialCapacity constructor argument. An additional optional loadFactor constructor argument provides a further means of customizing initial table capacity by specifying the table density to be used in calculating the amount of space to allocate for the given number of elements. Also, for compatibility with previous versions of this class, constructors may optionally specify an expected concurrencyLevel as an additional hint for internal sizing. Note that using many keys with exactly the same hashCode() is a sure way to slow down performance of any hash table. To ameliorate impact, when keys are Comparable, this class may use comparison order among keys to help break ties.<br>当有太多冲突（即具有不同散列码但落入同一个以表大小为模的键槽）时，该表动态扩展，预期平均效果是每个mapping（注：mapping就是一个key-&gt;value实体，bin就是实际内存中的结构）保持大约两个 bin（对应于 0.75 负载因子阈值用于调整大小，注：负载达到0.75的时候按照50%扩张，大小会来到1.5倍，0.75/1.5正好是每个mapping两个bin，见<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/26112957/why-would-loadfactor-be-0-75">stackoverflow讨论</a>）。随着映射的添加和删除，这个平均值可能会有很大差异，但总的来说，这保持了哈希表的普遍接受的时间/空间权衡。然而，调整这个或任何其他类型的哈希表的大小可能是一个相对较慢的操作。如果可能，最好使用的时候提供出估计的大小作为可选的构造函数参数<code>initialCapacity</code>。还有一个可选的构造函数参数 <code>loadFactor</code> 通过指定表密度与给定数量的元素计算来得到分配长度，这提供了一种自定义初始表容量的进一步的方法。此外，为了与此类的先前版本兼容，构造函数可以选择指定预期的 <code>concurrencyLevel</code> 作为内部大小的附加提示。请注意，使用许多具有完全相同 hashCode() 的键是一定会降低任何哈希表的性能的。为了减轻这个影响，当键满足 Comparable 接口时，这个类(ConcurrentHashMap)可以使用键之间的比较顺序来帮助打破联系。<br>A Set projection of a ConcurrentHashMap may be created (using newKeySet() or newKeySet(int)), or viewed (using keySet(Object) when only keys are of interest, and the mapped values are (perhaps transiently) not used or all take the same mapping value.<br>如果只对键值感兴趣，可以得到ConcurrentHashMap相应的 Set 投射（通过 <code>newKeySet()</code> 或者 <code>newKeySet(int)</code> 接口去创建，或者通过 keySet(Object)去查看），并且映射的值（或许暂时地）不会使用或者采用一样的值。<br>A ConcurrentHashMap can be used as scalable frequency map (a form of histogram or multiset) by using java.util.concurrent.atomic.LongAdder values and initializing via computeIfAbsent. For example, to add a count to a ConcurrentHashMap&lt;String,LongAdder&gt; freqs, you can use freqs.computeIfAbsent(k -&gt; new LongAdder()).increment();<br>ConcurrentHashMap可以在Java中用作可扩展的频率表（一种直方图或者多值集合的形式），通过采用 <code>util.concurrent.atomic.LongAdder</code> 作为值，并且通过<code>computeIfAbsent</code>机制初始化。例如，如果要增加一个 <code>ConcurrentHashMap&lt;String, LongAdder&gt; freqs</code> 的计数，你可以用<code>freqs.computeIfAbsent(k -&gt; new LongAdder()).increment();</code><br>This class and its views and iterators implement all of the optional methods of the Map and Iterator interfaces.<br>这个类（注：ConcurrentHashMap）以及它的视图和迭代器实现了Map和迭代器的所有可选的接口。<br>Like Hashtable but unlike HashMap, this class does not allow null to be used as a key or value.<br>与 Hashtable 类似但与 HashMap 不同的是，此类不允许将 null 用作键或值。<br>ConcurrentHashMaps support a set of sequential and parallel bulk operations that, unlike most Stream methods, are designed to be safely, and often sensibly, applied even with maps that are being concurrently updated by other threads; for example, when computing a snapshot summary of the values in a shared registry. There are three kinds of operation, each with four forms, accepting functions with Keys, Values, Entries, and (Key, Value) arguments and/or return values. Because the elements of a ConcurrentHashMap are not ordered in any particular way, and may be processed in different orders in different parallel executions, the correctness of supplied functions should not depend on any ordering, or on any other objects or values that may transiently change while computation is in progress; and except for forEach actions, should ideally be side-effect-free. Bulk operations on Map.Entry objects do not support method setValue.<br>ConcurrentHashMaps 支持一组顺序和并行的批量操作，与大多数 Stream 方法不同，这些操作被设计为安全且通常明智地进行应用，即使哈希表正在由其他线程并发更新；例如，在计算共享注册表中值的快照和时。共有三种操作，每种有四种形式，接受带有键、值、条目（注：Entries）和（键，值）参数和/或返回值的函数。因为 ConcurrentHashMap 的元素没有以任何特定的方式排序，并且可能在不同的并行执行中以不同的顺序进行处理，所提供函数的正确性不应该依赖于任何排序，或者依赖于其他任何会在计算过程中暂时改变的对象或值；除了 forEach 操作，理想情况下应该是无副作用的。 <code>Map.Entry</code> 对象上的批量操作不支持 <code>setValue</code> 方法。  </p>
+<p>forEach: Perform a given action on each element. A variant form applies a given transformation on each element before performing the action.  </p>
+<ul>
+<li><code>forEach</code>: 对每个元素执行给定的操作。变体形式在执行操作之前对每个元素应用给定的转换。<br>search: Return the first available non-null result of applying a given function on each element; skipping further search when a result is found.  </li>
+<li><code>search</code>: 返回在每个元素上应用给定函数的第一个可用非空结果；找到结果时就略过进一步搜索。<br>reduce: Accumulate each element. The supplied reduction function cannot rely on ordering (more formally, it should be both associative and commutative). There are five variants:  </li>
+<li><code>reduce</code>：累加每个元素。提供的归约函数不能依赖于排序（更正式地说，它应该是结合的和可交换的）。有五种变体：<br>Plain reductions. (There is not a form of this method for (key, value) function arguments since there is no corresponding return type.)  </li>
+</ul>
+<ol>
+<li>普通reduce归约。 （因为没有相应的返回类型，所以 (key, value) 函数参数没有这种方法的形式。）<br>Mapped reductions that accumulate the results of a given function applied to each element.  </li>
+<li>映射归约，累积应用于每个元素的给定函数的结果。<br>Reductions to scalar doubles, longs, and ints, using a given basis value.  </li>
+<li>使用给定的基值归约到到标量双精度、长整数和整数。  </li>
+</ol>
+<p>These bulk operations accept a parallelismThreshold argument. Methods proceed sequentially if the current map size is estimated to be less than the given threshold. Using a value of Long.MAX_VALUE suppresses all parallelism. Using a value of 1 results in maximal parallelism by partitioning into enough subtasks to fully utilize the ForkJoinPool.commonPool() that is used for all parallel computations. Normally, you would initially choose one of these extreme values, and then measure performance of using in-between values that trade off overhead versus throughput.<br>这些批量操作接受一个 parallelismThreshold 参数。如果估计当前哈希表大小小于给定阈值，则方法按顺序进行。使用 Long.MAX_VALUE 值会抑制所有并行性。使用值 1 可通过划分为足够多的子任务以充分利用用于所有并行计算的 <code>ForkJoinPool.commonPool()</code> 来实现最大并行度。通常，您最初会选择这些极值之一，然后使用测量性能得到的在开销与吞吐量之间进行权衡的中间值。<br>The concurrency properties of bulk operations follow from those of ConcurrentHashMap: Any non-null result returned from get(key) and related access methods bears a happens-before relation with the associated insertion or update. The result of any bulk operation reflects the composition of these per-element relations (but is not necessarily atomic with respect to the map as a whole unless it is somehow known to be quiescent). Conversely, because keys and values in the map are never null, null serves as a reliable atomic indicator of the current lack of any result. To maintain this property, null serves as an implicit basis for all non-scalar reduction operations. For the double, long, and int versions, the basis should be one that, when combined with any other value, returns that other value (more formally, it should be the identity element for the reduction). Most common reductions have these properties; for example, computing a sum with basis 0 or a minimum with basis MAX_VALUE.<br>批量操作的并发属性遵循 ConcurrentHashMap 的并发属性：从 get(key) 和相关访问方法返回的任何非空结果都与相关的插入或更新具有<code>happens-before</code>关系。任何批量操作的结果都反映了这些每个元素关系的组成（但对于整个映射而言，不一定是原子的，除非以某种方式知道它是静止的）。相反，由于映射中的键和值永远不会为空，因此空可以作为当前缺少任何结果的可靠原子指示符。为了保持这个属性，null 作为所有非标量（注：非数值量）归约操作的隐式基础。对于 double、long 和 int 版本，基础应该是与任何其他值组合时返回该其他值的基础（更正式地说，它应该是归约的标识元素）。最常见的归约具有这些特性；例如，计算以 0 为基础的总和或以 MAX_VALUE 为基础的最小值。<br>Search and transformation functions provided as arguments should similarly return null to indicate the lack of any result (in which case it is not used). In the case of mapped reductions, this also enables transformations to serve as filters, returning null (or, in the case of primitive specializations, the identity basis) if the element should not be combined. You can create compound transformations and filterings by composing them yourself under this “null means there is nothing there now” rule before using them in search or reduce operations.<br>作为参数提供的搜索和转换函数应该类似地返回 null 以指示缺少任何结果（在这种情况下不使用它）。在“映射归约”的情况下，这也使转换能够充当过滤器，如果元素不应该被组合，则返回 null（或者，在原始特化的情况下，作为特定的基础）。在将它们用于搜索或归约操作之前，您可以通过在此“null 意味着现在没有任何东西”规则下自己组合它们来创建复合转换和过滤。<br>Methods accepting and/or returning Entry arguments maintain key-value associations. They may be useful for example when finding the key for the greatest value. Note that “plain” Entry arguments can be supplied using new AbstractMap.SimpleEntry(k,v).<br>接受和/或返回 Entry 参数的方法维护键值关联。例如，在查找最大值的键时，它们可能很有用。请注意，可以使用 <code>new AbstractMap.SimpleEntry(k,v)</code> 提供“普通” <code>Entry</code> 参数。<br>Bulk operations may complete abruptly, throwing an exception encountered in the application of a supplied function. Bear in mind when handling such exceptions that other concurrently executing functions could also have thrown exceptions, or would have done so if the first exception had not occurred.<br>批量操作可能会突然完成，抛出在提供的函数中遇到的异常。请记住，在处理此类异常时，其他并发执行的函数也可能抛出异常，或者在第一个异常没有发生的情况下抛出一个异常。<br>Speedups for parallel compared to sequential forms are common but not guaranteed. Parallel operations involving brief functions on small maps may execute more slowly than sequential forms if the underlying work to parallelize the computation is more expensive than the computation itself. Similarly, parallelization may not lead to much actual parallelism if all processors are busy performing unrelated tasks.<br>与顺序形式相比，并行通常都可以实现加速，但不能保证。如果并行化计算的基础工作比计算本身更昂贵，则涉及小映射上的简短函数的并行操作可能比顺序形式执行得更慢。 类似地，如果所有处理器都忙于执行不相关的任务，并行化可能不会带来太多实际的并行性。<br>All arguments to all task methods must be non-null.<br>所有任务方法的参数都必须为非空。<br>This class is a member of the Java Collections Framework.<br>这个类是 Java 集合框架的成员。<br>Since:<br>1.5<br>Author:<br>Doug Lea<br>Type parameters:<br><K> – the type of keys maintained by this map<br><V> – the type of mapped values  </p>
+<h2 id="实现注释"><a href="#实现注释" class="headerlink" title="实现注释"></a>实现注释</h2><p>Overview:</p>
+<p>The primary design goal of this hash table is to maintain concurrent readability (typically method get(), but also iterators and related methods) while minimizing update contention. Secondary goals are to keep space consumption about the same or better than java.util.HashMap, and to support high initial insertion rates on an empty table by many threads.  </p>
+<p>这个哈希表的主要设计目标是维护并发可读性（通常是 get() 方法，但也有迭代器和相关方法）同时最小化更新争用。次要目标是将空间消耗保持在<br>与 java.util.HashMap 相同或更好，并且支持多线程对空表的<strong>高初始插入率</strong>。</p>
+<p>This map usually acts as a binned (bucketed) hash table.  Each<br>key-value mapping is held in a Node.  Most nodes are instances<br>of the basic Node class with hash, key, value, and next<br>fields. However, various subclasses exist: TreeNodes are<br>arranged in balanced trees, not lists.  TreeBins hold the roots<br>of sets of TreeNodes. ForwardingNodes are placed at the heads<br>of bins during resizing. ReservationNodes are used as<br>placeholders while establishing values in computeIfAbsent and<br>related methods.  The types TreeBin, ForwardingNode, and<br>ReservationNode do not hold normal user keys, values, or<br>hashes, and are readily distinguishable during search etc<br>because they have negative hash fields and null key and value<br>fields. (These special nodes are either uncommon or transient,<br>so the impact of carrying around some unused fields is<br>insignificant.)</p>
+<p>该映射通常用作分箱（分桶）哈希表。每个键值映射保存在一个节点中。大多数节点是实例具有散列、键、值和下一个的基本 Node 类领域。但是，存在各种子类：TreeNodes 排列在平衡的树中，而不是列表中。 TreeBins 持有根的树节点集。 ForwardingNodes 被放置在头部调整大小期间的 bin 数量。 ReservationNodes 用作在 computeIfAbsent 中建立值时的占位符和相关方法。类型 TreeBin、ForwardingNode 和 ReservationNode 不持有普通的用户键、值或散列，并且在搜索等过程中很容易区分，因为它们有负散列字段和空键和值领域。 （这些特殊节点要么不常见，要么短暂，所以携带一些未使用的字段的影响是微不足道的。）</p>
+<p>The table is lazily initialized to a power-of-two size upon the<br>first insertion.  Each bin in the table normally contains a<br>list of Nodes (most often, the list has only zero or one Node).<br>Table accesses require volatile/atomic reads, writes, and<br>CASes.  Because there is no other way to arrange this without<br>adding further indirections, we use intrinsics<br>(sun.misc.Unsafe) operations.</p>
+<p>表被延迟初始化为 2 的幂大小<br>第一次插入。表中的每个 bin 通常包含一个<br>节点列表（大多数情况下，列表只有零个或一个节点）。<br>表访问需要易失性/原子读、写和<br>案例。因为没有其他方法可以安排这个<br>添加进一步的间接性，我们使用内在函数<br>(sun.misc.Unsafe) 操作。</p>
+<p>We use the top (sign) bit of Node hash fields for control<br>purposes – it is available anyway because of addressing<br>constraints.  Nodes with negative hash fields are specially<br>handled or ignored in map methods.</p>
+<p>我们使用节点哈希字段的顶部（符号）位进行控制<br>目的 - 由于寻址，它无论如何都可用<br>约束。具有负哈希字段的节点是特别的<br>在地图方法中处理或忽略。</p>
+<p>Insertion (via put or its variants) of the first node in an<br>empty bin is performed by just CASing it to the bin.  This is<br>by far the most common case for put operations under most<br>key/hash distributions.  Other update operations (insert,<br>delete, and replace) require locks.  We do not want to waste<br>the space required to associate a distinct lock object with<br>each bin, so instead use the first node of a bin list itself as<br>a lock. Locking support for these locks relies on builtin<br>“synchronized” monitors.</p>
+<p>将第一个节点插入（通过 put 或其变体）<br>空 bin 是通过将其 CASing 到 bin 来执行的。这是<br>到目前为止，最常见的放置操作情况<br>密钥/哈希分布。其他更新操作（插入、<br>删除和替换）需要锁。我们不想浪费<br>将不同的锁对象与关联所需的空间<br>每个 bin，所以改为使用 bin 列表本身的第一个节点作为<br>一把锁。对这些锁的锁定支持依赖于内置<br>“同步”监视器。</p>
+<p>Using the first node of a list as a lock does not by itself<br>suffice though: When a node is locked, any update must first<br>validate that it is still the first node after locking it, and<br>retry if not. Because new nodes are always appended to lists,<br>once a node is first in a bin, it remains first until deleted<br>or the bin becomes invalidated (upon resizing).</p>
+<p>使用列表的第一个节点作为锁本身并不<br>足够了：当一个节点被锁定时，任何更新都必须首先<br>验证它在锁定后仍然是第一个节点，并且<br>如果没有，请重试。因为新节点总是附加到列表中，<br>一旦一个节点在一个 bin 中是第一个，它就会保持第一个直到被删除<br>或者 bin 失效（调整大小时）。</p>
+<p>The main disadvantage of per-bin locks is that other update<br>operations on other nodes in a bin list protected by the same<br>lock can stall, for example when user equals() or mapping<br>functions take a long time.  However, statistically, under<br>random hash codes, this is not a common problem.  Ideally, the<br>frequency of nodes in bins follows a Poisson distribution<br>(<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Poisson_distribution">http://en.wikipedia.org/wiki/Poisson_distribution</a>) with a<br>parameter of about 0.5 on average, given the resizing threshold<br>of 0.75, although with a large variance because of resizing<br>granularity. Ignoring variance, the expected occurrences of<br>list size k are (exp(-0.5) pow(0.5, k) / factorial(k)). The<br>first values are:</p>
+<p>per-bin 锁的主要缺点是其他更新<br>对受相同保护的 bin 列表中的其他节点进行操作<br>锁定可能会停止，例如当用户 equals() 或映射时<br>函数需要很长时间。然而，统计上，在<br>随机哈希码，这不是一个常见问题。理想情况下，<br>箱中节点的频率遵循泊松分布<br>(<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Poisson_distribution">http://en.wikipedia.org/wiki/Poisson_distribution</a>) 与<br>给定调整大小阈值，参数平均约为 0.5<br>0.75，虽然由于调整大小而有很大的差异<br>粒度。忽略方差，预期出现的<br>列表大小 k 是 (exp(-0.5) pow(0.5, k) / factorial(k))。这<br>第一个值是：</p>
+<p>0:    0.60653066<br>1:    0.30326533<br>2:    0.07581633<br>3:    0.01263606<br>4:    0.00157952<br>5:    0.00015795<br>6:    0.00001316<br>7:    0.00000094<br>8:    0.00000006<br>more: less than 1 in ten million</p>
+<p>Lock contention probability for two threads accessing distinct<br>elements is roughly 1 / (8 #elements) under random hashes.</p>
+<p>两个线程对于不同元素的锁争用大概是 1 / (8 #elements)在随机哈希的情况下</p>
+<p>Actual hash code distributions encountered in practice<br>sometimes deviate significantly from uniform randomness.  This<br>includes the case when N &gt; (1&lt;&lt;30), so some keys MUST collide.<br>Similarly for dumb or hostile usages in which multiple keys are<br>designed to have identical hash codes or ones that differs only<br>in masked-out high bits. So we use a secondary strategy that<br>applies when the number of nodes in a bin exceeds a<br>threshold. These TreeBins use a balanced tree to hold nodes (a<br>specialized form of red-black trees), bounding search time to<br>O(log N).  Each search step in a TreeBin is at least twice as<br>slow as in a regular list, but given that N cannot exceed<br>(1&lt;&lt;64) (before running out of addresses) this bounds search<br>steps, lock hold times, etc, to reasonable constants (roughly<br>100 nodes inspected per operation worst case) so long as keys<br>are Comparable (which is very common – String, Long, etc).<br>TreeBin nodes (TreeNodes) also maintain the same “next”<br>traversal pointers as regular nodes, so can be traversed in<br>iterators in the same way.</p>
+<p>The table is resized when occupancy exceeds a percentage<br>threshold (nominally, 0.75, but see below).  Any thread<br>noticing an overfull bin may assist in resizing after the<br>initiating thread allocates and sets up the replacement array.<br>However, rather than stalling, these other threads may proceed<br>with insertions etc.  The use of TreeBins shields us from the<br>worst case effects of overfilling while resizes are in<br>progress.  Resizing proceeds by transferring bins, one by one,<br>from the table to the next table. However, threads claim small<br>blocks of indices to transfer (via field transferIndex) before<br>doing so, reducing contention.  A generation stamp in field<br>sizeCtl ensures that resizings do not overlap. Because we are<br>using power-of-two expansion, the elements from each bin must<br>either stay at same index, or move with a power of two<br>offset. We eliminate unnecessary node creation by catching<br>cases where old nodes can be reused because their next fields<br>won’t change.  On average, only about one-sixth of them need<br>cloning when a table doubles. The nodes they replace will be<br>garbage collectable as soon as they are no longer referenced by<br>any reader thread that may be in the midst of concurrently<br>traversing table.  Upon transfer, the old table bin contains<br>only a special forwarding node (with hash field “MOVED”) that<br>contains the next table as its key. On encountering a<br>forwarding node, access and update operations restart, using<br>the new table.</p>
+<p>Each bin transfer requires its bin lock, which can stall<br>waiting for locks while resizing. However, because other<br>threads can join in and help resize rather than contend for<br>locks, average aggregate waits become shorter as resizing<br>progresses.  The transfer operation must also ensure that all<br>accessible bins in both the old and new table are usable by any<br>traversal.  This is arranged in part by proceeding from the<br>last bin (table.length - 1) up towards the first.  Upon seeing<br>a forwarding node, traversals (see class Traverser) arrange to<br>move to the new table without revisiting nodes.  To ensure that<br>no intervening nodes are skipped even when moved out of order,<br>a stack (see class TableStack) is created on first encounter of<br>a forwarding node during a traversal, to maintain its place if<br>later processing the current table. The need for these<br>save/restore mechanics is relatively rare, but when one<br>forwarding node is encountered, typically many more will be.<br>So Traversers use a simple caching scheme to avoid creating so<br>many new TableStack nodes. (Thanks to Peter Levart for<br>suggesting use of a stack here.)</p>
+<p>The traversal scheme also applies to partial traversals of<br>ranges of bins (via an alternate Traverser constructor)<br>to support partitioned aggregate operations.  Also, read-only<br>operations give up if ever forwarded to a null table, which<br>provides support for shutdown-style clearing, which is also not<br>currently implemented.</p>
+<p>Lazy table initialization minimizes footprint until first use,<br>and also avoids resizings when the first operation is from a<br>putAll, constructor with map argument, or deserialization.<br>These cases attempt to override the initial capacity settings,<br>but harmlessly fail to take effect in cases of races.</p>
+<p>The element count is maintained using a specialization of<br>LongAdder. We need to incorporate a specialization rather than<br>just use a LongAdder in order to access implicit<br>contention-sensing that leads to creation of multiple<br>CounterCells.  The counter mechanics avoid contention on<br>updates but can encounter cache thrashing if read too<br>frequently during concurrent access. To avoid reading so often,<br>resizing under contention is attempted only upon adding to a<br>bin already holding two or more nodes. Under uniform hash<br>distributions, the probability of this occurring at threshold<br>is around 13%, meaning that only about 1 in 8 puts check<br>threshold (and after resizing, many fewer do so).</p>
+<p>TreeBins use a special form of comparison for search and<br>related operations (which is the main reason we cannot use<br>existing collections such as TreeMaps). TreeBins contain<br>Comparable elements, but may contain others, as well as<br>elements that are Comparable but not necessarily Comparable for<br>the same T, so we cannot invoke compareTo among them. To handle<br>this, the tree is ordered primarily by hash value, then by<br>Comparable.compareTo order if applicable.  On lookup at a node,<br>if elements are not comparable or compare as 0 then both left<br>and right children may need to be searched in the case of tied<br>hash values. (This corresponds to the full list search that<br>would be necessary if all elements were non-Comparable and had<br>tied hashes.) On insertion, to keep a total ordering (or as<br>close as is required here) across rebalancings, we compare<br>classes and identityHashCodes as tie-breakers. The red-black<br>balancing code is updated from pre-jdk-collections<br>(<a target="_blank" rel="noopener" href="http://gee.cs.oswego.edu/dl/classes/collections/RBCell.java">http://gee.cs.oswego.edu/dl/classes/collections/RBCell.java</a>)<br>based in turn on Cormen, Leiserson, and Rivest “Introduction to<br>Algorithms” (CLR).</p>
+<p>TreeBins also require an additional locking mechanism.  While<br>list traversal is always possible by readers even during<br>updates, tree traversal is not, mainly because of tree-rotations<br>that may change the root node and/or its linkages.  TreeBins<br>include a simple read-write lock mechanism parasitic on the<br>main bin-synchronization strategy: Structural adjustments<br>associated with an insertion or removal are already bin-locked<br>(and so cannot conflict with other writers) but must wait for<br>ongoing readers to finish. Since there can be only one such<br>waiter, we use a simple scheme using a single “waiter” field to<br>block writers.  However, readers need never block.  If the root<br>lock is held, they proceed along the slow traversal path (via<br>next-pointers) until the lock becomes available or the list is<br>exhausted, whichever comes first. These cases are not fast, but<br>maximize aggregate expected throughput.</p>
+<p>Maintaining API and serialization compatibility with previous<br>versions of this class introduces several oddities. Mainly: We<br>leave untouched but unused constructor arguments refering to<br>concurrencyLevel. We accept a loadFactor constructor argument,<br>but apply it only to initial table capacity (which is the only<br>time that we can guarantee to honor it.) We also declare an<br>unused “Segment” class that is instantiated in minimal form<br>only when serializing.</p>
+<p>Also, solely for compatibility with previous versions of this<br>class, it extends AbstractMap, even though all of its methods<br>are overridden, so it is just useless baggage.</p>
+<p>This file is organized to make things a little easier to follow<br>while reading than they might otherwise: First the main static<br>declarations and utilities, then fields, then main public<br>methods (with a few factorings of multiple public methods into<br>internal ones), then sizing methods, trees, traversers, and<br>bulk operations.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+         
+          <li><a href="/projects_url">项目</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-ConcurrentHashMap%E6%B3%A8%E9%87%8A%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91-%E4%BD%9C%E8%80%85%EF%BC%9ADoug-Lea"><span class="toc-number">1.</span> <span class="toc-text">Java ConcurrentHashMap注释中文翻译(作者：Doug Lea)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E8%AF%8D"><span class="toc-number">1.1.</span> <span class="toc-text">生词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E6%B3%A8%E9%87%8A"><span class="toc-number">1.2.</span> <span class="toc-text">功能注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%B3%A8%E9%87%8A"><span class="toc-number">1.3.</span> <span class="toc-text">实现注释</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&text=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&title=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&is_video=false&description=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ConcurrentHashMap_comment_v1.8_zh&body=Check out this article: https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&title=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&title=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&title=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&title=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&name=ConcurrentHashMap_comment_v1.8_zh&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://stjimreal.github.io/2021/12/04/ConcurrentHashMap-comment-v1-8-zh/&t=ConcurrentHashMap_comment_v1.8_zh"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    Jim Real
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects_url">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
